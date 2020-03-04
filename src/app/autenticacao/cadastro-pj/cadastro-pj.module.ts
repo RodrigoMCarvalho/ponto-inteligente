@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule, MatButtonModule, MatListModule, MatTooltipModule, MatIconModule, MatSnackBarModule } from '@angular/material';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -23,7 +24,8 @@ import { MatInputModule, MatButtonModule, MatListModule, MatTooltipModule, MatIc
     MatListModule,
     MatTooltipModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    SharedModule
   ]
 })
 export class CadastroPjModule { }
