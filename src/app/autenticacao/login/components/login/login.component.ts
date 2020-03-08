@@ -46,9 +46,9 @@ export class LoginComponent implements OnInit {
         );
         console.log(usuarioData);
         if (usuarioData['role'] == 'ROLE_ADMIN') {
-          alert('Deve redirecionar para a página de admin')
+          this.router.navigate(['/admin']);
         } else {
-          alert ('Deve redirecionar para a página de funcionário')
+          this.router.navigate(['/funcionario']);
         }
     }, err => {
       console.log(err);
