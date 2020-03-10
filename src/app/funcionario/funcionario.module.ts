@@ -5,6 +5,10 @@ import { LancamentoComponent } from './components/lancamento/lancamento.componen
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FuncionarioComponent } from './components/funcionario.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule, MatListModule, MatInputModule, MatIconModule, MatTooltipModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCardModule } from '@angular/material';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -12,11 +16,24 @@ import { FuncionarioComponent } from './components/funcionario.component';
   declarations: [
     ListagemComponent,
     LancamentoComponent,
-    FuncionarioComponent],
+    FuncionarioComponent  ],
   imports: [
     CommonModule,
     RouterModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatInputModule,
+    MatButtonModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatSnackBarModule,
+    SharedModule
   ]
 })
 export class FuncionarioModule { }
