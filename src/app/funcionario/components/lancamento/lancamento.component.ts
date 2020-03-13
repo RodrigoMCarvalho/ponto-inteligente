@@ -3,6 +3,9 @@ import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Tipo } from 'src/app/shared/models/tipo.enum';
+import { HttpUtilService } from 'src/app/shared/services/http-util.service';
+import { LancamentoService } from 'src/app/shared/services/lancamento.service';
+import { Lancamento } from 'src/app/shared/models/lancamento.model';
 
 declare var navigator: any;
 
@@ -20,7 +23,9 @@ export class LancamentoComponent implements OnInit {
 
   constructor(
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private httpUtil: HttpUtilService,
+    private lancamentoService: LancamentoService
   ) { }
 
   ngOnInit() {
@@ -31,7 +36,16 @@ export class LancamentoComponent implements OnInit {
     this.obterUltimoLancamento();
   }
   obterUltimoLancamento() {
-    this.ultimoTipoLancado = '';
+    this.lancamentoService.buscarUltimoTipoLancado()
+    .subscribe(
+      data => {
+        this.ultimoTipoLancado = data.data ? data.data.tipo: '';
+      },
+      err => {
+        const msg: string = "Erro para obter o último lançamento";
+        this.snackBar.open(msg, "Erro", { duration: 3000 });
+      }
+    )
   }
 
   obterGeoLocation(): string {
@@ -82,7 +96,27 @@ export class LancamentoComponent implements OnInit {
   }
 
   cadastrar(tipo: Tipo) {
-    alert(`Tipo: ${tipo}, dataAtualEn: ${this.dataAtualEn}, geolocation: ${this.geoLocation}`)
+    const lancamento: Lancamento = new Lancamento(
+      this.dataAtualEn,
+      tipo,
+      this.geoLocation,
+      this.httpUtil.obterIdUsuario()
+    );
+    this.lancamentoService.cadastrar(lancamento)
+    .subscribe(
+      data => {
+        const msg: string = "Lançamento realizado com sucesso.";
+        this.snackBar.open(msg, "Sucesso", { duration: 3000 });
+        this.router.navigate(['/funcionario/listagem']);
+      },
+      err => {
+        let msg: string = "Tente novamente mais tarde";
+        if(err.status == 400) {
+          msg = err.error.errors.join(' ');
+        }
+        this.snackBar.open(msg, "Erro", { duration: 3000 });
+      }
+    )
   }
 
 }

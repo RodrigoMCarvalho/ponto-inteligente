@@ -44,13 +44,11 @@ export class CadastrarPjComponent  implements OnInit {
     this.cadastroPj = this.form.value;
     this.service.cadastrar(this.cadastroPj).subscribe(
       data => {
-        console.log(data);
         const msg: string = "Cadastro realizado com sucesso.";
         this.snackBar.open(msg, "Sucesso", { duration: 3000 });
         this.router.navigate(['/login']);
       },
       err => {
-        console.log(err);
         let msg: string = "Tente novamente mais tarde.";
         if(err.status == 400) {
           msg = err.error.errors.join(' ');
