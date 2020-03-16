@@ -12,12 +12,14 @@ export class HttpUtilService {
     let httpHeaders: HttpHeaders = new HttpHeaders();
 
     if(localStorage['token']) {
-      httpHeaders = httpHeaders.set('Authorization', 'Bearer' + localStorage['token']);
+      httpHeaders = httpHeaders.set(
+        'Authorization', 'Bearer ' + localStorage['token']
+        );
     }
     return { headers: httpHeaders };
   }
 
-  obterIdUsuario() {
+  obterIdUsuario(): string {
     if(!localStorage['token']) {
       return '';
     }

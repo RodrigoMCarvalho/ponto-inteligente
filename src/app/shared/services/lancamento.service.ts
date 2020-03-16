@@ -22,7 +22,7 @@ export class LancamentoService {
 
   buscarUltimoTipoLancado(): Observable<any> {
     return this.http.get(env.baseApiUrl + this.PATH +
-      this.PATH_ULTIMO_LANC.replace('{funcionarioId}', this.httpUtil.obterDadosUsuario()),
+      this.PATH_ULTIMO_LANC.replace('{funcionarioId}', this.httpUtil.obterIdUsuario()),
       this.httpUtil.headers());
   }
 
