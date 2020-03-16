@@ -7,8 +7,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FuncionarioComponent } from './components/funcionario.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule, MatListModule, MatInputModule, MatIconModule, MatTooltipModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCardModule } from '@angular/material';
+import { MatButtonModule, MatListModule, MatInputModule, MatIconModule, MatTooltipModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCardModule, MatPaginatorIntl } from '@angular/material';
 import { SharedModule } from '../shared/shared.module';
+import { PtBrMatPaginatorIntl } from '../shared/pt-br-mat-paginator-intl';
 
 
 
@@ -34,6 +35,9 @@ import { SharedModule } from '../shared/shared.module';
     MatIconModule,
     MatSnackBarModule,
     SharedModule
+  ],
+  providers: [
+    { provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl}
   ]
 })
 export class FuncionarioModule { }
