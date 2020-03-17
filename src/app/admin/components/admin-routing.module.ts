@@ -19,9 +19,9 @@ export const AdminRoutes: Routes = [
         component: CadastroComponent
       },
       {
-        path:'atualizacao/:lancamentoId',
+        path: 'atualizacao/:lancamentoId',
         component: AtualizacaoComponent
-      }
+        }
     ]
   }
 ];
