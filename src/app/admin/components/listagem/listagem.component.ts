@@ -4,6 +4,7 @@ import { Lancamento } from 'src/app/shared/models/lancamento.model';
 import { LancamentoService } from 'src/app/shared/services/lancamento.service';
 import { FormBuilder } from '@angular/forms';
 import { HttpUtilService } from 'src/app/shared/services/http-util.service';
+import { FuncionarioService } from 'src/app/shared/services/funcionario.service';
 
 @Component({
   selector: 'app-listagem',
@@ -25,7 +26,8 @@ export class ListagemComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
-    private httpUtil: HttpUtilService
+    private httpUtil: HttpUtilService,
+    private funcionarioService: FuncionarioService
   ) { }
 
   ngOnInit() {
@@ -40,7 +42,7 @@ export class ListagemComponent implements OnInit {
   }
 
   exibirLancamentos() {
-    this.funcionarioId = '2';
+    this.funcionarioId = '3';
     this.lancamentoService.listarLancamentosPorFuncionario(
             this.funcionarioId, this.pagina, this.ordem, this.direcao)
       .subscribe(
