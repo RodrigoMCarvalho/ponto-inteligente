@@ -10,16 +10,18 @@ import { environment as env } from 'src/environments/environment';
 export class FuncionarioService {
 
   private readonly PATH: string = 'funcionarios';
-  private readonly PATH_FUNC_POR_EMPRESA: string = '/empresa/{empresaId}';
+  private readonly PATH_FUNC_POR_EMPRESA = '/empresa/{empresaId}';
 
   constructor(
-      private http: HttpClient,
-      private httpUtil: HttpUtilService
-  ) { }
+  	private http: HttpClient,
+  	private httpUtil: HttpUtilService) { }
 
-  buscarUltimoTipoLancado(): Observable<any> {
-    return this.http.get(env.baseApiUrl + this.PATH +
-      this.PATH_FUNC_POR_EMPRESA.replace('{empresaId}', this.httpUtil.obterIdEmpresa()),
-      this.httpUtil.headers());
+  listarFuncionariosPorEmpresa(): Observable<any> {
+  	return this.http.get(
+  	  	env.baseApiUrl + this.PATH +
+  	  		this.PATH_FUNC_POR_EMPRESA.replace(
+  	  			'{empresaId}', this.httpUtil.obterIdEmpresa()),
+  	  	this.httpUtil.headers()
+  	);
   }
 }

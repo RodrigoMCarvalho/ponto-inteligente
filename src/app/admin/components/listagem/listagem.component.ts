@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatSnackBar, PageEvent, Sort } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSnackBar, PageEvent, Sort, MatSelect } from '@angular/material';
 import { Lancamento } from 'src/app/shared/models/lancamento.model';
 import { LancamentoService } from 'src/app/shared/services/lancamento.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpUtilService } from 'src/app/shared/services/http-util.service';
 import { FuncionarioService } from 'src/app/shared/services/funcionario.service';
+import { Funcionario } from 'src/app/shared/models/funcionario.model';
 
 @Component({
   selector: 'app-listagem',
@@ -17,6 +18,10 @@ export class ListagemComponent implements OnInit {
   colunas: string[] = ['data', 'tipo', 'localizacao', "acao"];
   funcionarioId: string;
   totalLancamentos: number;
+  funcionarios: Funcionario[];
+
+  @ViewChild(MatSelect, { static: true }) matSelect: MatSelect;
+  form: FormGroup;
 
   private pagina: number;
   private ordem: string;
@@ -33,7 +38,38 @@ export class ListagemComponent implements OnInit {
   ngOnInit() {
     this.pagina = 0;
     this.ordemPadrao();
-    this.exibirLancamentos();
+    this.obterFuncionarios();
+    this.gerarForm();
+  }
+
+  gerarForm() {
+    this.form = this.fb.group({
+      funcs: ['', []]
+    })
+  }
+
+  get funcId(): string {
+    return sessionStorage['funcionarioId'] || false;
+  }
+
+  obterFuncionarios() {
+    this.funcionarioService.listarFuncionariosPorEmpresa()
+      .subscribe(
+        data => {
+          const usuarioId: string = this.httpUtil.obterIdUsuario();
+          this.funcionarios = (data.data as Funcionario[])
+            .filter(func => func.id != usuarioId);
+
+          if(this.funcId) {
+            this.form.get('funcs').setValue(parseInt(this.funcId, 10));
+            this.exibirLancamentos();
+          }
+        },
+        err => {
+          const msg: string = "Erro para obter funcionário.";
+          this.snackBar.open(msg, "Erro", { duration: 3000 });
+        }
+      );
   }
 
   ordemPadrao() {
@@ -42,7 +78,15 @@ export class ListagemComponent implements OnInit {
   }
 
   exibirLancamentos() {
-    this.funcionarioId = '3';
+    if(this.matSelect.selected) {
+      this.funcionarioId = this.matSelect.selected['value'];
+    } else if(this.funcId) {
+      this.funcionarioId = this.funcId;
+    } else {
+      return;
+    }
+    sessionStorage['funcionarioId'] = this.funcionarioId;
+
     this.lancamentoService.listarLancamentosPorFuncionario(
             this.funcionarioId, this.pagina, this.ordem, this.direcao)
       .subscribe(
