@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListagemComponent } from './components/listagem/listagem.component';
+import { ListagemComponent, ConfirmarDialog } from './components/listagem/listagem.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { AtualizacaoComponent } from './components/atualizacao/atualizacao.component';
 import { RouterModule } from '@angular/router';
@@ -19,6 +19,7 @@ import { PtBrMatPaginatorIntl } from '../shared/pt-br-mat-paginator-intl';
     ListagemComponent,
     CadastroComponent,
     AtualizacaoComponent,
+    ConfirmarDialog,
     AdminComponent
   ],
   imports: [
@@ -50,5 +51,6 @@ import { PtBrMatPaginatorIntl } from '../shared/pt-br-mat-paginator-intl';
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl }
   ],
+  entryComponents: [ConfirmarDialog]
 })
 export class AdminModule { }
